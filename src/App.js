@@ -1,24 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
+import AddEditBill from './MyComponents/AddEditBill';
+import BillMaster from './MyComponents/BillMaster';
+import React, { use, useState,useEffect } from 'react';
 
 function App() {
+
+  const [getBills, setBills] = useState([]);
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <AddEditBill setbills={setBills} getbills={getBills} />
+    <BillMaster bills={getBills} /> 
+    </>
   );
 }
 
