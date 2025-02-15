@@ -1,13 +1,13 @@
 import React from "react";
 
 export default function AddEditBill(props) {
-  let bills = [];
+
   const AddBill = (e) => {
     e.preventDefault();
-    let billName = document.getElementById("billName").value;
-    let billAmount = document.getElementById("billAmount").value;
-    let billDate = document.getElementById("billDate").value;
-    let billupload = document.getElementById("billupload").value;
+    let billName = props.getBillname;
+    let billAmount = props.getBillAmount;
+    let billDate = props.getBillDate;
+    let billupload = props.getBillUpload;
 
     if (
       billName == "" ||
@@ -33,49 +33,67 @@ export default function AddEditBill(props) {
 
     let bill = { Id, billName, billAmount, billDate, billupload };
     props.setbills([...props.getbills, bill]);
+    alert("Bill added successfully");
 
-    document.getElementById("billName").value = "";
-    document.getElementById("billAmount").value = "";
-    document.getElementById("billDate").value = "";
-    document.getElementById("billupload").value = "";
+    props.setBillName("");
+    props.setBillAmount("");
+    props.setBillDate("");
+    props.setBillUpload("");
   };
 
   return (
-    <div className="card container mt-4">
+    <div className="card container mt-4" style={{ backgroundColor: "#f0f0f0" }}>
       <div className="card-header">
-        <h3>Add/Edit Bill</h3>
+        {props.isBillEdit ? <h3>Edit Bill</h3> : <h3>Add Bill</h3>}
       </div>
-      <div className="card-body">
+      <div className="card-body ">
         <form onSubmit={AddBill}>
-          <div className="form-group">
-            <label htmlFor="billName">Bill Name : </label>
+        <div className="form-group">
+            <label htmlFor="billId">Bill Id</label>
+            <input
+              type="number"
+              className="form-control"
+              id="billId" value={props.getBillId} disabled
+            />
+          </div>
+
+          <div className="form-group mt-4">
+            <label htmlFor="billName">Bill Name</label>
             <input
               type="text"
               className="form-control"
               id="billName"
               placeholder="Enter bill name"
+              value={props.getBillname} onChange={(e) => props.setBillName(e.target.value)}
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="billAmount">Bill Amount : </label>
+
+          <div className="form-group mt-4">
+            <label htmlFor="billAmount">Bill Amount</label>
             <input
               type="number"
               className="form-control"
               id="billAmount"
               placeholder="Enter bill amount"
+              value={props.getBillAmount} onChange={(e) => props.setBillAmount(e.target.value)}
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="billDueDate">Bill Date : </label>
-            <input type="date" className="form-control" id="billDate" />
+
+          <div className="form-group mt-4">
+            <label htmlFor="billDueDate">Bill Date</label>
+            <input type="date" className="form-control" id="billDate" 
+            value={props.getBillDate} onChange={(e) => props.setBillDate(e.target.value)} />
           </div>
-          <div className="form-group">
-            <label htmlFor="billDueDate">Bill Upload : </label>
-            <input type="file" className="form-control" id="billupload" />
+          <div className="form-group mt-4">
+            <label htmlFor="billDueDate">Bill Upload</label>
+            <input type="file" className="form-control" id="billupload" 
+            onChange={(e) => props.setBillUpload(e.target.value)} />
           </div>
-          <button type="submit" className="btn btn-primary">
+          <div className="form-group mt-4 text-center">
+          <button type="submit" className="btn btn-success">
             Submit
           </button>
+          </div>
         </form>
       </div>
     </div>
