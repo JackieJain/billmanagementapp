@@ -1,9 +1,22 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
 
 export default function BillMaster(props) {
 
+  useEffect(() => {
+    axios.get("https://localhost:44367/api/Bills/GetBills")
+      .then(response => 
+      {
+        let bills = response.data;  
+        props.setbills(bills);
+      }
+      )
+      .catch(error => console.error("Error fetching users:", error));
+  }); // Empty array = Runs only once when the component appears
    const navigate = useNavigate();
+
 
   const deleteBill = (Id) => {
     props.setbills(props.getbills.filter((x) => x.Id != Id));
@@ -13,10 +26,10 @@ export default function BillMaster(props) {
 
     let bill = props.getbills.filter((x) => x.Id == Id)[0];
     props.setBillId(bill.Id);
-    props.setBillName(bill.billName);
-    props.setBillAmount(bill.billAmount);
-    props.setBillDate(bill.billDate);
-    props.setBillUpload(bill.billupload);
+    props.setName(bill.Name);
+    props.setAmount(bill.Amount);
+    props.setBillDate(bill.BillDate);
+    props.setFile(bill.File);
 
     navigate("/");  
   }
@@ -26,9 +39,9 @@ export default function BillMaster(props) {
       <div className="card-header">
         <h3>Bill Master</h3>
       </div>
-      <div className="card-body">
-        <table className="table table-bordered mt-4" border="1">
-          <thead>
+      <div className="card-body" style={{ height: "669px", overflowY: "auto" }}>
+        <table className="table table-bordered mt-4" border="1" >
+          <thead style={{ position:"sticky", top:"0" }}>
             <tr>
               <th scope="col" width="5%">Sr No.</th>
               <th scope="col" width="20%">Bill Name</th>
@@ -43,12 +56,12 @@ export default function BillMaster(props) {
             return (
               <tbody key={index}>
                 <tr>
-                  <td id="rowId">{bill.Id}</td>
-                  <td>{bill.billName}</td>
-                  <td>{bill.billAmount}</td>
+                  <td id="rowId">{bill.id}</td>
+                  <td>{bill.name}</td>
+                  <td>{bill.amount}</td>
                   <td>{bill.billDate}</td>
                   <td>
-                    <img src={bill.billupload}></img>{" "}
+                    <img src={"data:image/png;base64,"+bill.fileBytes} style={{height:"50px", width:"50px" }} />
                   </td>
                   <td>
                     <div className="row col-12">
@@ -62,7 +75,7 @@ export default function BillMaster(props) {
                     <button
                       className="btn btn-danger"
                       onClick={() => {
-                        deleteBill(bill.Id);
+                        deleteBill(bill.id);
                       }}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">

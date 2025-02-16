@@ -14,10 +14,10 @@ function App() {
   const [getBills, setBills] = useState([]);
 
   const [getBillId, setBillId] = useState(0);
-  const [getBillname, setBillName] = useState("");
-  const [getBillAmount, setBillAmount] = useState("");
+  const [getName, setName] = useState("");
+  const [getAmount, setAmount] = useState("");
   const [getBillDate, setBillDate] = useState("");
-  const [getBillUpload, setBillUpload] = useState("");
+  const [getFile, setFile] = useState(null);
   const [isBillEdit, setBillEdit] = useState(false);
   
   return (
@@ -27,17 +27,17 @@ function App() {
       <Routes>
     <Route exact path="/" element={<AddEditBill setbills={setBills} getbills={getBills}
                     getBillId={getBillId} setBillId={setBillId} 
-                    getBillname={getBillname} setBillName={setBillName}
-                      getBillAmount={getBillAmount} setBillAmount={setBillAmount}
+                    getName={getName} setName={setName}
+                      getAmount={getAmount} setAmount={setAmount}
                       getBillDate={getBillDate} setBillDate={setBillDate}
-                      getBillUpload={getBillUpload} setBillUpload={setBillUpload} title={isBillEdit} />}/>
+                      getFile={getFile} setFile={setFile} title={isBillEdit} />}/>
 
     <Route path="/BillMaster" element={<BillMaster setbills={setBills} getbills={getBills}
                       getBillId={getBillId} setBillId={setBillId} 
-                      getBillname={getBillname} setBillName={setBillName}
-                        getBillAmount={getBillAmount} setBillAmount={setBillAmount}
+                      getName={getName} setName={setName}
+                        getAmount={getAmount} setAmount={setAmount}
                         getBillDate={getBillDate} setBillDate={setBillDate}
-                        getBillUpload={getBillUpload} setBillUpload={setBillUpload} /> }/>
+                        getFile={getFile} setFile={setFile} /> }/>
     </Routes>
     </Router>
     </>
