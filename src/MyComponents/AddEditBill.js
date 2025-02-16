@@ -46,12 +46,11 @@ export default function AddEditBill(props) {
       }
     })
     .then(response => {
-      let bills = response.data;  
-      props.setbills(bills);
+      alert("Bill added successfully");
     })
-    .catch(error => console.error("Error fetching users:", error));
+    .catch(error => {alert("Something went wrong");console.error("Error fetching users:", error)});
 
-    alert("Bill added successfully");
+
 
     props.setName("");
     props.setAmount("");

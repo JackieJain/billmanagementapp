@@ -6,30 +6,45 @@ import axios from "axios";
 export default function BillMaster(props) {
 
   useEffect(() => {
+
     axios.get("https://localhost:44367/api/Bills/GetBills")
       .then(response => 
       {
         let bills = response.data;  
-        props.setbills(bills);
+        //props.setbills(bills);
+        props.setbills(Array.isArray(bills) ? bills : []);
       }
       )
       .catch(error => console.error("Error fetching users:", error));
-  }); // Empty array = Runs only once when the component appears
+  },[]); // Empty array = Runs only once when the component appears
    const navigate = useNavigate();
 
 
   const deleteBill = (Id) => {
-    props.setbills(props.getbills.filter((x) => x.Id != Id));
+
+    let existingbills = props.getbills; 
+    axios.post("https://localhost:44367/api/Bills/DeleteBill", Id)
+    .then(response => 
+    {
+      props.setbills(props.getbills.filter((x) => x.id != Id));
+      alert("Bill deleted successfully");
+    })
+    .catch(error => {
+      props.setbills(existingbills);
+      alert("Something went wrong"); 
+      console.error("Error fetching users:", error)
+    });
+
   };
 
   const EditBill = (Id) => {
 
-    let bill = props.getbills.filter((x) => x.Id == Id)[0];
-    props.setBillId(bill.Id);
-    props.setName(bill.Name);
-    props.setAmount(bill.Amount);
-    props.setBillDate(bill.BillDate);
-    props.setFile(bill.File);
+    let bill = props.getbills.filter((x) => x.id == Id)[0];
+    props.setBillId(bill.id);
+    props.setName(bill.name);
+    props.setAmount(bill.amount);
+    props.setBillDate(bill.billDate);
+    props.setFile(bill.file);
 
     navigate("/");  
   }
