@@ -37,7 +37,7 @@ function App() {
                       getName={getName} setName={setName}
                         getAmount={getAmount} setAmount={setAmount}
                         getBillDate={getBillDate} setBillDate={setBillDate}
-                        getFile={getFile} setFile={setFile} /> }/>
+                        getFile={getFile} setFile={setFile} setBillEdit={setBillEdit} /> }/>
     </Routes>
     </Router>
     </>

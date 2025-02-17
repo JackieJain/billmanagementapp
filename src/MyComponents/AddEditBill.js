@@ -25,14 +25,15 @@ export default function AddEditBill(props) {
     // if (props.getbills.length > 0) {
     //   Id =
     //     Math.max(
-    //       ...props.getbills.map((a) => {
+    //       ...props.getbills.map((a) => {-
     //         return a.Id;
     //       })
     //     ) + 1;
     // } else {
     //   Id = 1;
     // }
-
+    if(Id == 0)
+    {
     let bill = new FormData();
     bill.append("Id", Id);
     bill.append("Name", Name);
@@ -49,13 +50,32 @@ export default function AddEditBill(props) {
       alert("Bill added successfully");
     })
     .catch(error => {alert("Something went wrong");console.error("Error fetching users:", error)});
+  }
+  else
+  {
+    let bill = new FormData();
+    bill.append("Id", Id);
+    bill.append("Name", Name);
+    bill.append("Amount", Amount);
+    bill.append("BillDate", BillDate);
+    bill.append("File", File);
 
+    axios.put(`https://localhost:44367/api/Bills/UpdateBill`, bill, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    .then(response => {
+      alert("Bill updated successfully");
+    })
+    .catch(error => {alert("Something went wrong");console.error("Error fetching users:", error)});
+  }
 
-
-    props.setName("");
-    props.setAmount("");
-    props.setBillDate("");
-    props.setFile(null);
+  props.setBillId(0);
+  props.setName("");
+  props.setAmount("");
+  props.setBillDate("");
+  props.setFile(null);
   };
 
   return (
